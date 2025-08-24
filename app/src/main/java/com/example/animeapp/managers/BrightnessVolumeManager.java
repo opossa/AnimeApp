@@ -14,7 +14,7 @@ public class BrightnessVolumeManager {
     private final Context context;
     private final AudioManager audioManager;
     private final SharedPreferences prefs;
-    
+
     private int brightness;
     private int volume;
 
@@ -27,9 +27,11 @@ public class BrightnessVolumeManager {
 
     private void loadSavedSettings() {
         brightness = prefs.getInt("brightness", SHOW_MAX_BRIGHTNESS / 2);
-        volume = prefs.getInt("volume", SHOW_MAX_VOLUME / 2);
         setScreenBrightness(brightness);
-        setVolume(volume);
+
+        int systemVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        volume = (int) ((systemVolume * 1.0f / maxVolume) * SHOW_MAX_VOLUME);
     }
 
     public void setScreenBrightness(int brightness) {
@@ -61,13 +63,6 @@ public class BrightnessVolumeManager {
         }
 
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, 0);
-        saveVolumeToPreferences(volume);
-    }
-
-    private void saveVolumeToPreferences(int volume) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("volume", volume);
-        editor.apply();
     }
 
     public int getBrightness() {
@@ -75,6 +70,9 @@ public class BrightnessVolumeManager {
     }
 
     public int getVolume() {
+        int systemVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        volume = (int) ((systemVolume * 1.0f / maxVolume) * SHOW_MAX_VOLUME);
         return volume;
     }
 }
