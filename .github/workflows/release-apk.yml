@@ -37,11 +37,19 @@ jobs:
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> keystore.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
 
-      - name: Get versionName from Gradle
+    
+      - name: Get versionName from build.gradle
         id: version
         run: |
-          VERSION_NAME=$(./gradlew -q printVersionName)
+          
+          VERSION_NAME=$(grep 'versionName' app/build.gradle | head -1 | awk -F'"' '{print $2}')
+          
+          if [ -z "$VERSION_NAME" ]; then
+            VERSION_NAME="2.8.0"
+          fi
+          
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "Extracted version: $VERSION_NAME"
 
       - name: Build Release APK
         run: ./gradlew clean assembleRelease --stacktrace
