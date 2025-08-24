@@ -8,6 +8,18 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+task printVersionCode {
+    doLast {
+        println android.defaultConfig.versionCode
+    }
+}
+
+task printVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}
+
 android {
     namespace 'com.example.animeapp'
     compileSdk 35
@@ -17,7 +29,6 @@ android {
         minSdk 24
         targetSdk 35
 
-       
         def envVersionName = System.getenv("VERSION_NAME")
         def envVersionCode = System.getenv("VERSION_CODE")
 
@@ -29,22 +40,8 @@ android {
         }
     }
 
-    task printVersionCode {
-        doLast {
-            println android.defaultConfig.versionCode
-        }
-    }
-
-    task printVersionName {
-        doLast {
-            println android.defaultConfig.versionName
-        }
-    }
-
     signingConfigs {
-      
         debug {}
-
        
         release {
             if (keystorePropertiesFile.exists()) {
@@ -78,9 +75,7 @@ android {
 
     buildFeatures {
         viewBinding true
-       
         buildConfig true
-        
     }
 }
 
