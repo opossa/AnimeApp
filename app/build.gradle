@@ -29,6 +29,18 @@ android {
         }
     }
 
+    task printVersionCode {
+        doLast {
+            println android.defaultConfig.versionCode
+        }
+    }
+
+    task printVersionName {
+        doLast {
+            println android.defaultConfig.versionName
+        }
+    }
+
     signingConfigs {
       
         debug {}
@@ -62,12 +74,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
-    }
-
-    task printVersionCode {
-    doLast {
-        println android.defaultConfig.versionCode
-    }
     }
 
     buildFeatures {
