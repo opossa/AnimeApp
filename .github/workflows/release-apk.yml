@@ -1,4 +1,4 @@
-name: Build and Release APK
+usesand Release APK
 
 on:
   push:
@@ -33,7 +33,8 @@ jobs:
       - name: Build Release APK
         run: ./gradlew clean assembleRelease --stacktrace
 
-      - name: Upload APK to GitHub Release        uses: softprops/action-gh-release@v2
+      - name: Upload APK to GitHub Release Release
+        uses: softprops/action-gh-release@v2
         with:
           files: app/build/outputs/apk/release/animeapp_*.apk
           name: "AnimeApp Release"
