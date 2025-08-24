@@ -64,6 +64,12 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
+    task printVersionCode {
+    doLast {
+        println android.defaultConfig.versionCode
+    }
+    }
+
     buildFeatures {
         viewBinding true
        
