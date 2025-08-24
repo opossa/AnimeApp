@@ -8,22 +8,6 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-task printVersionCode {
-    doLast {
-        project.afterEvaluate {
-            println android.defaultConfig.versionCode
-        }
-    }
-}
-
-task printVersionName {
-    doLast {
-        project.afterEvaluate {
-            println android.defaultConfig.versionName
-        }
-    }
-}
-
 android {
     namespace 'com.example.animeapp'
     compileSdk 35
