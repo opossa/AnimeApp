@@ -1,4 +1,4 @@
-usesand Release APK
+name: Build and Release APK
 
 on:
   push:
@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -33,7 +32,7 @@ jobs:
       - name: Build Release APK
         run: ./gradlew clean assembleRelease --stacktrace
 
-      - name: Upload APK to GitHub Release Release
+      - name: Upload APK to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: app/build/outputs/apk/release/animeapp_*.apk
