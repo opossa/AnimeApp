@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 public class BrightnessVolumeManager {
     private static final int SHOW_MAX_BRIGHTNESS = 100;
-    private static final int SHOW_MAX_VOLUME = 50;
+    private static final int SHOW_MAX_VOLUME = 10;
     private static final String PREFS_NAME = "VideoPlayerSettings";
 
     private final Context context;
