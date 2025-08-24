@@ -1,0 +1,32 @@
+name: Build and Release APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build Release APK
+        run: ./gradlew clean assembleRelease
+
+      - name: Upload APK to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/release/animeapp_*.apk
+          name: "AnimeApp Release"
+          body: "Automated release from GitHub Actions."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
