@@ -10,13 +10,17 @@ if (keystorePropertiesFile.exists()) {
 
 task printVersionCode {
     doLast {
-        println android.defaultConfig.versionCode
+        project.afterEvaluate {
+            println android.defaultConfig.versionCode
+        }
     }
 }
 
 task printVersionName {
     doLast {
-        println android.defaultConfig.versionName
+        project.afterEvaluate {
+            println android.defaultConfig.versionName
+        }
     }
 }
 
