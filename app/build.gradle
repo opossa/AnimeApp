@@ -20,8 +20,8 @@ android {
         def envVersionName = System.getenv("VERSION_NAME")
         def envVersionCode = System.getenv("VERSION_CODE")
 
-        versionName (envVersionName ?: "2.7")  
-        versionCode ((envVersionCode ?: "17") as Integer)
+        versionName (envVersionName ?: "2.8")  
+        versionCode ((envVersionCode ?: "18") as Integer)
 
         vectorDrawables {
             useSupportLibrary true
