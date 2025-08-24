@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ดูอนิเมะ</string>
+    <string name="anime_cover">รูป</string>
+     <string name="navigation_drawer_open">เปิดเมนู</string>
+    <string name="navigation_drawer_close">ปิดเมนู</string>
+    <string name="last_episode">โหลดไม่ได้</string>
+    <string name="no_internet">ไม่มีอินเทอร์เน็ต</string>
+    <string name="loading_data">กำลังโหลดข้อมูล...</string>
+    <string name="updating_data">กำลังอัปเดตข้อมูล...</string>
+    <string name="loading_complete">ดึงข้อมูลเสร็จสิ้น</string>
+    <string name="connection_failed">การเชื่อมต่อล้มเหลว</string>
+    <string name="load_error">เกิดข้อผิดพลาดในการโหลดข้อมูล</string>
+    <string name="load_failed">ไม่สามารถดึงข้อมูลได้</string>
+    <string name="update_success">อัปเดตข้อมูลเรียบร้อย</string>
+    <string name="checking_updates">กำลังตรวจสอบอัพเดท...</string>
+    <string name="new_version_available">มีเวอร์ชันใหม่ %s</string>
+    <string name="update_check_failed">ตรวจสอบอัพเดทไม่สำเร็จ: %s</string>
+    <string name="update">อัพเดท</string>
+    <string name="later">ภายหลัง</string>
+    <string name="version">เวอร์ชั่น: %s</string>
+    <string name="version_unknown">เวอร์ชั่นไม่ทราบ</string>
+    <string name="loading_progress">กำลังดึงข้อมูล: ตอนที่ %1$s จาก %2$s</string>
+    <string name="anime_thumbnail">รูปภาพอนิเมะ</string>
+    <string name="clear_history">ลบประวัติทั้งหมด</string>
+</resources>

@@ -1,0 +1,16 @@
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Android Studio / AndroidIDE
+.idea/
+.androidide/
+
+# Keystore & Credentials
+app/keystore/
+keystore.properties
+
+# Outputs
+*.apk
+*.aab

@@ -1,0 +1,67 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <!-- Base application theme. -->
+  <style name="Base.AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <!-- Customize your theme here. -->
+    <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <item name="android:statusBarColor">@color/black_s</item>
+    <item name="android:navigationBarColor">#000000</item>
+    <item name="android:windowLightNavigationBar">false</item>
+    <item name="isTelevision">false</item>
+   
+  </style>
+
+  <style name="AppTheme" parent="Base.AppTheme" />
+  
+    <style name="Theme.AnimeApp.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+    <item name="colorOnPrimary">@android:color/white</item>
+    <item name="colorSecondary">@color/colorSecondary</item>
+    <item name="colorOnSecondary">@color/colorOnSecondary</item>
+    <item name="android:colorBackground">@color/colorBackground</item>
+     <item name="android:statusBarColor">@color/black_s</item>
+    <item name="android:navigationBarColor">#000000</item>
+    <item name="android:windowLightNavigationBar">false</item>
+    <item name="isTelevision">false</item>
+    
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowFullscreen">true</item>
+    <item name="android:windowContentOverlay">@null</item>
+</style>
+
+<style name="Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:textSize">18sp</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:autoSizeTextType">uniform</item>
+    <item name="android:autoSizeMinTextSize">12sp</item>
+    <item name="android:autoSizeMaxTextSize">18sp</item>
+    <item name="android:autoSizeStepGranularity">1sp</item>
+</style>
+
+<style name="CircleImageViewStyle" parent="">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSize">50%</item>
+</style>
+
+<style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="android:windowBackground">@drawable/dialog_black_bg</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="colorBackgroundFloating">#FF1A1A1A</item>
+    <item name="android:windowIsFloating">true</item>
+    
+    <!-- ปุ่ม -->
+    <item name="buttonBarPositiveButtonStyle">@style/BlackDialogButton</item>
+    <item name="android:buttonBarPositiveButtonStyle">@style/BlackDialogButton</item>
+</style>
+
+<style name="BlackDialogButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+    <item name="android:textColor">@color/colorAccent</item>
+    <item name="android:background">@drawable/dialog_button_bg</item>
+    <item name="android:layout_marginEnd">8dp</item>
+</style>
+<style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <!-- Optional: Customize buttons or colors -->
+</style>
+</resources>

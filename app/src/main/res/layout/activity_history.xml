@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:background="@color/background_color"
+     android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+         android:layout_height="?attr/actionBarSize"
+         android:layout_width="match_parent"
+         android:background="?attr/colorPrimary"
+         android:elevation="4dp"
+         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+         android:id="@+id/toolbar">
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:textSize="20sp"
+             android:textColor="@android:color/white"
+             android:text="ประวัติการดู"
+             android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         android:paddingBottom="8dp"
+         tools:listitem="@layout/item_history"
+         android:clipToPadding="false"
+         android:id="@+id/history_recycler_view"
+         android:paddingTop="8dp" />
+
+    <TextView
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         android:visibility="gone"
+         android:gravity="center"
+         android:textSize="18sp"
+         android:textColor="@android:color/darker_gray"
+         android:id="@+id/empty_history_text"
+         android:text="ไม่มีประวัติการดู" />
+
+</LinearLayout>

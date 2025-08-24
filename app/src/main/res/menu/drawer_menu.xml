@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_history"
+        android:title="ประวัติการดู" />
+            
+    <group android:id="@+id/group_anime">
+        <item
+            android:id="@+id/nav_header_anime"
+            android:title="หมวดอนิเมะ"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+            
+        <item
+            android:id="@+id/nav_home"
+            android:title="• หน้าแรก" />
+        <item
+            android:id="@+id/nav_dub"
+            android:title="• พากย์ไทย" />
+        <item
+            android:id="@+id/nav_sub"
+            android:title="• ซับไทย" />
+        <item
+            android:id="@+id/nav_chinese"
+            android:title="• อนิเมะจีน" />
+    </group>
+
+    <group android:id="@+id/group_series">
+        <item
+            android:id="@+id/nav_header_series"
+            android:title="Fixmono"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/nav_fixmono_new"
+            android:title="• ซีรี่ย์อัพเดท" />
+        <item
+            android:id="@+id/nav_fixmono_th"
+            android:title="• ซีรี่ย์จีนพากย์ไทย" />
+        <item
+            android:id="@+id/nav_fixmono_scb"
+            android:title="• ซีรี่ย์จีนซับไทย" />
+        <item
+            android:id="@+id/nav_fixmono_ke"
+            android:title="• ซีรี่ย์เกาหลีพากย์ไทย" />
+        <item
+            android:id="@+id/nav_fixmono_keth"
+            android:title="• ซีรี่ย์เกาหลีซับไทย" />
+        <item
+            android:id="@+id/nav_fixmono_en"
+            android:title="• ซีรี่ย์ฝรั่ง" />
+        <item
+            android:id="@+id/nav_fixmono_jp"
+            android:title="• ซีรี่ย์ญี่ปุ่น" />
+    </group>
+
+    <group android:id="@+id/goseries4k_series">
+        <item
+            android:id="@+id/series4k_series"
+            android:title="GoSeries4K"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/goseries4k_s"
+            android:title="• ซีรี่ย์ออนไลน์" />
+        <item
+            android:id="@+id/goseries4k_m"
+            android:title="• ซีรี่ย์จีน" />
+        <item
+            android:id="@+id/goseries4k_l"
+            android:title="• ซีรี่ย์เกาหลี" />
+        <item
+            android:id="@+id/goseries4k_h"
+            android:title="• ซีรี่ย์จีนพากย์ไทย" />
+        <item
+            android:id="@+id/goseries4k_d"
+            android:title="• ซีรี่ย์ญี่ปุ่น" />
+        <item
+            android:id="@+id/goseries4k_b"
+            android:title="• ซีรี่ย์ฝรั่ง" />
+        <item
+            android:id="@+id/goseries4k_g"
+            android:title="• ซีรี่ย์ไทย" />
+    </group>
+
+    <group android:id="@+id/wowdrama_series">
+        <item
+            android:id="@+id/wowdrama_ses"
+            android:title="WowDrama"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/wowdrama_g"
+            android:title="• ซีรี่ย์ออนไลน์" />
+        <item
+            android:id="@+id/wowdrama_k"
+            android:title="• ซีรี่ย์จีน" />
+        <item
+            android:id="@+id/wowdrama_v"
+            android:title="• ซีรี่ย์เกาหลี" />
+        <item
+            android:id="@+id/wowdrama_l"
+            android:title="• ซีรี่ย์ญี่ปุ่น" />
+        <item
+            android:id="@+id/wowdrama_m"
+            android:title="• ละครไทย" />
+        <item
+            android:id="@+id/wowdrama_a"
+            android:title="• ซีรี่ย์จีนพากย์ไทย" />
+        <item
+            android:id="@+id/wowdrama_f"
+            android:title="• ซีรี่ย์ญี่ปุ่นพากย์ไทย" />
+        <item
+            android:id="@+id/wowdrama_n"
+            android:title="• ซีรี่ย์เกาหลีพากย์ไทย" />
+    </group>
+
+    <group android:id="@+id/hdd1112_series">
+        <item
+            android:id="@+id/hdd1112df"
+            android:title="HDD1112"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/hdd1112_h"
+            android:title="• ซีรี่ย์จีน-พากย์ไทย" />
+            
+        <item
+            android:id="@+id/hdd1112_f"
+            android:title="• ซีรี่ย์เกาหลีพากย์ไทย" />
+        <item
+            android:id="@+id/hdd1112_g"
+            android:title="• ซีรี่ย์ฝรั่ง-พากย์ไทย" />
+        <item
+            android:id="@+id/hdd1112_j"
+            android:title="• ซีรี่ย์ใหม่-2025" />
+        <item
+            android:id="@+id/hdd1112_k"
+            android:title="• ซีรี่ย์ไทย" />
+        <item
+            android:id="@+id/hdd1112_s"
+            android:title="• ดูซีรี่ย์จีน" />
+        <item
+            android:id="@+id/hdd1112_l"
+            android:title="• ดูซีรี่ย์เกาหลี" />
+      
+    </group>
+
+    <group android:id="@+id/seriesday_series">
+        <item
+            android:id="@+id/seriesday_seres"
+            android:title="SeriesDay"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/seriesday_j"
+            android:title="• ซีรี่ย์จีน" />
+        <item
+            android:id="@+id/seriesday_h"
+            android:title="• ซีรี่ย์เกาหลี" />
+        <item
+            android:id="@+id/seriesday_s"
+            android:title="• ซีรี่ย์ฝรั่ง" />
+        <item
+            android:id="@+id/seriesday_r"
+            android:title="• ซีรี่ย์ญี่ปุ่น" />
+        <item
+            android:id="@+id/seriesday_a"
+            android:title="• ซีรี่ย์ไทย" />
+        <item
+            android:id="@+id/seriesday_u"
+            android:title="• ซีรี่ย์ใหม่" />
+        <item
+            android:id="@+id/seriesday_m"
+            android:title="• netflix" />
+        <item
+            android:id="@+id/seriesday_p"
+            android:title="• ซีรี่ย์พากย์ไทย" />
+    </group>
+
+    <group android:id="@+id/i123_movie">
+        <item
+            android:id="@+id/movie_123"
+            android:title="หนังออนไลน์"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/movie_all"
+            android:title="• ดูหนังออนไลน์" />
+        <item
+            android:id="@+id/movie_j"
+            android:title="• หนังใหม่-2025" />
+        <item
+            android:id="@+id/movie_l"
+            android:title="• หนังใหม่-2024" />
+        <item
+            android:id="@+id/movie_u"
+            android:title="• หนังใหม่-2023" />
+        <item
+            android:id="@+id/movie_s"
+            android:title="• หนังใหม่-2022" />
+        <item
+            android:id="@+id/movie_c"
+            android:title="• หนังใหม่-2021" />
+        <item
+            android:id="@+id/movie_n"
+            android:title="• หนังใหม่-2020" />
+        <item
+            android:id="@+id/movie_t"
+            android:title="• หนังไทย" />
+    </group>
+    
+    <group android:id="@+id/i24hd_movie">
+        <item
+            android:id="@+id/movie24hd"
+            android:title="หนังออนไลน์24HD"
+            android:enabled="false"
+            android:icon="@android:color/transparent" />
+
+        <item
+            android:id="@+id/movie24hd_a"
+            android:title="• ดูหนังออนไลน์" />
+        <item
+            android:id="@+id/movie24hd_b"
+            android:title="• หนังใหม่-2025" />
+        <item
+            android:id="@+id/movie24hd_c"
+            android:title="• หนังใหม่-2024" />
+        <item
+            android:id="@+id/movie24hd_d"
+            android:title="• หนังใหม่-2023" />
+        <item
+            android:id="@+id/movie24hd_e"
+            android:title="• หนังชนโรง" />
+        <item
+            android:id="@+id/movie24hd_f"
+            android:title="• หนังไทย" />
+    </group>
+
+
+</menu>

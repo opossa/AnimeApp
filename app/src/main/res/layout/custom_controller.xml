@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:padding="0dp"
+     android:id="@+id/exo_controller">
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:background="#66000000"
+         android:gravity="center_vertical"
+         android:padding="12dp"
+         android:orientation="horizontal"
+         android:id="@+id/header_bar">
+
+        <ImageButton
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:src="@drawable/ic_media_previous"
+             android:contentDescription="ย้อนกลับ"
+             android:background="@android:color/transparent"
+             android:focusableInTouchMode="?isTelevision"
+             android:tint="@android:color/white"
+             android:focusable="?isTelevision"
+             android:id="@+id/btnBack" />
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="0dp"
+             android:ellipsize="end"
+             android:textSize="18sp"
+             android:textColor="@android:color/white"
+             android:layout_marginStart="12dp"
+             android:maxLines="1"
+             android:layout_weight="1"
+             android:id="@+id/videoTitle"
+             android:text="ชื่อเรื่อง" />
+
+        <ImageButton
+             android:layout_height="40dp"
+             android:layout_width="40dp"
+             android:src="@drawable/ic_info_outline"
+             android:contentDescription="รายละเอียดวีดีโอ"
+             android:background="?attr/selectableItemBackgroundBorderless"
+             android:focusableInTouchMode="?isTelevision"
+             android:tint="@android:color/white"
+             android:focusable="?isTelevision"
+             android:id="@+id/btnDetails" />
+
+    </LinearLayout>
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:gravity="center"
+         android:orientation="horizontal"
+         android:id="@+id/center_controls"
+         android:layout_gravity="center">
+
+        <ImageButton
+             android:layout_height="60dp"
+             android:layout_width="60dp"
+             android:src="@drawable/ic_prev_episode_inactive"
+             android:contentDescription="ตอนก่อนหน้า"
+             android:background="?attr/selectableItemBackgroundBorderless"
+             android:layout_marginHorizontal="5dp"
+             android:focusableInTouchMode="?isTelevision"
+             android:focusable="?isTelevision"
+             android:id="@+id/prev_episode" />
+
+        <ImageButton
+             android:layout_height="60dp"
+             android:layout_width="60dp"
+             android:src="@drawable/replay_10_24"
+             android:contentDescription="ย้อนหลัง 10 วินาที"
+             android:layout_marginHorizontal="10dp"
+             android:focusableInTouchMode="?isTelevision"
+             style="@style/ExoStyledControls.Button.Bottom.RepeatToggle"
+             tools:ignore="HardcodedText"
+             android:focusable="?isTelevision"
+             android:id="@+id/backward_10" />
+
+        <ImageButton
+             android:layout_height="60dp"
+             android:layout_width="60dp"
+             android:contentDescription="เล่นหรือหยุด"
+             android:layout_marginHorizontal="10dp"
+             style="@style/ExoStyledControls.Button.Center.PlayPause"
+             tools:ignore="HardcodedText"
+             android:id="@id/exo_play_pause" />
+
+        <ImageButton
+             android:layout_height="60dp"
+             android:layout_width="60dp"
+             android:src="@drawable/forward_10_24"
+             android:contentDescription="ไปข้างหน้า 10 วินาที"
+             android:layout_marginHorizontal="10dp"
+             android:focusableInTouchMode="?isTelevision"
+             style="@style/ExoStyledControls.Button.Bottom.RepeatToggle"
+             tools:ignore="HardcodedText"
+             android:focusable="?isTelevision"
+             android:id="@+id/forward_10" />
+
+        <ImageButton
+             android:layout_height="60dp"
+             android:layout_width="60dp"
+             android:src="@drawable/ic_next_episode_inactive"
+             android:contentDescription="ตอนถัดไป"
+             android:background="?attr/selectableItemBackgroundBorderless"
+             android:layout_marginHorizontal="5dp"
+             android:focusableInTouchMode="?isTelevision"
+             android:focusable="?isTelevision"
+             android:id="@+id/next_episode" />
+
+    </LinearLayout>
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:background="#66000000"
+         android:padding="8dp"
+         android:orientation="vertical"
+         android:layout_gravity="bottom">
+
+        <LinearLayout
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:gravity="center_vertical"
+             android:orientation="horizontal">
+
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 style="@style/ExoStyledControls.TimeText.Position"
+                 android:id="@id/exo_position" />
+
+            <androidx.media3.ui.DefaultTimeBar
+                 android:layout_height="32dp"
+                 android:layout_width="0dp"
+                 android:layout_marginEnd="8dp"
+                 android:layout_marginStart="8dp"
+                 android:layout_weight="1"
+                 android:id="@id/exo_progress" />
+
+            <TextView
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 style="@style/ExoStyledControls.TimeText.Duration"
+                 android:id="@id/exo_duration" />
+
+            <ImageButton
+                 android:layout_height="40dp"
+                 android:layout_width="40dp"
+                 android:src="@drawable/ic_speed"
+                 android:contentDescription="ความเร็ว"
+                 android:background="@android:color/transparent"
+                 android:focusableInTouchMode="?isTelevision"
+                 android:tint="@android:color/white"
+                 android:focusable="?isTelevision"
+                 android:id="@+id/btnSpeed" />
+
+            <ImageButton
+                 android:layout_height="40dp"
+                 android:layout_width="40dp"
+                 android:src="@android:drawable/ic_menu_always_landscape_portrait"
+                 android:contentDescription="หมุนหน้าจอ"
+                 android:background="@android:color/transparent"
+                 android:focusableInTouchMode="?isTelevision"
+                 android:tint="@android:color/white"
+                 android:focusable="?isTelevision"
+                 android:id="@+id/btnRotate" />
+
+            <ImageButton
+                 android:layout_height="40dp"
+                 android:layout_width="40dp"
+                 android:src="@android:drawable/ic_menu_crop"
+                 android:contentDescription="ปรับขนาด"
+                 android:background="@android:color/transparent"
+                 android:focusableInTouchMode="?isTelevision"
+                 android:tint="@android:color/white"
+                 android:focusable="?isTelevision"
+                 android:id="@+id/btnResize" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

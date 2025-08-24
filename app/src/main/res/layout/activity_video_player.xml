@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:background="@color/black"
+     android:keepScreenOn="true"
+     tools:context=".VideoPlayerActivity">
+
+    <androidx.media3.ui.PlayerView
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         android:background="@color/black"
+         app:show_shuffle_button="false"
+         app:controller_layout_id="@layout/custom_controller"
+         app:show_buffering="never"
+         app:surface_type="texture_view"
+         app:use_artwork="true"
+         app:buffered_color="@color/fade_white"
+         app:show_subtitle_button="true"
+         app:resize_mode="fit"
+         android:id="@+id/player_view" />
+
+    <ProgressBar
+         android:layout_height="60dp"
+         android:layout_width="60dp"
+         android:layout_centerInParent="true"
+         android:visibility="visible"
+         android:indeterminateTint="@color/white"
+         android:id="@+id/buffer_progressbar" />
+
+    <Button
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:visibility="gone"
+         android:clickable="false"
+         android:layout_centerVertical="true"
+         android:textSize="22sp"
+         android:textColor="@color/white"
+         android:layout_marginStart="120dp"
+         tools:ignore="HardcodedText,RtlHardcoded"
+         android:drawableLeft="@drawable/fast_rewind"
+         style="@style/Widget.AppCompat.Button.Borderless"
+         android:id="@+id/double_tap_skip_backward_icon"
+         android:text="10" />
+
+    <Button
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:visibility="gone"
+         android:layout_marginEnd="120dp"
+         android:clickable="false"
+         android:layout_centerVertical="true"
+         android:textSize="22sp"
+         android:layout_alignParentEnd="true"
+         android:textColor="@color/white"
+         tools:ignore="HardcodedText,RtlHardcoded"
+         style="@style/Widget.AppCompat.Button.Borderless"
+         android:drawableRight="@drawable/fast_forward"
+         android:id="@+id/double_tab_skip_forward_icon"
+         android:text="10" />
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:layout_centerInParent="true"
+         android:visibility="gone"
+         android:background="@drawable/round_corner"
+         android:gravity="center"
+         android:padding="10dp"
+         android:orientation="horizontal"
+         android:id="@+id/brightness_volume_container">
+
+        <ImageView
+             android:layout_height="35dp"
+             android:layout_width="35dp"
+             android:visibility="gone"
+             android:adjustViewBounds="true"
+             android:src="@drawable/brightness_6_24"
+             tools:ignore="ContentDescription"
+             android:id="@+id/brightness_icon" />
+
+        <ImageView
+             android:layout_height="40dp"
+             android:layout_width="40dp"
+             android:visibility="gone"
+             android:adjustViewBounds="true"
+             android:src="@drawable/volume_up_24"
+             tools:ignore="ContentDescription"
+             android:id="@+id/volume_icon" />
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:textSize="22sp"
+             android:textColor="@color/white"
+             android:layout_marginStart="5dp"
+             tools:ignore="HardcodedText"
+             android:id="@+id/brightness_volume_tv"
+             android:text="100"
+             android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

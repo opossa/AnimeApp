@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+     android:background="#121212"
+     android:keepScreenOn="true">
+
+    <androidx.appcompat.widget.Toolbar
+         android:layout_height="?attr/actionBarSize"
+         android:layout_width="match_parent"
+         android:background="#1F1F1F"
+         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
+         app:titleTextColor="#FFFFFF"
+         android:id="@+id/toolbar" />
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:visibility="gone"
+         android:layout_below="@id/toolbar"
+         android:gravity="center_horizontal"
+         android:padding="16dp"
+         android:orientation="vertical"
+         android:id="@+id/progress_container">
+
+        <ProgressBar
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:layout_marginBottom="8dp"
+             style="?android:attr/progressBarStyleHorizontal"
+             android:id="@+id/progress_bar" />
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:textSize="16sp"
+             android:textColor="#FFFFFF"
+             android:id="@+id/progress_text" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+         android:layout_height="match_parent"
+         android:layout_width="match_parent"
+         android:layout_below="@id/progress_container"
+         android:padding="8dp"
+         android:clipToPadding="false"
+         android:id="@+id/episodes_recycler_view"
+         android:overScrollMode="never" />
+
+</RelativeLayout>

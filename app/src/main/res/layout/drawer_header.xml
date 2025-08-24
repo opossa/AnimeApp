@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_height="160dp"
+     android:layout_width="match_parent"
+     android:background="#121212"
+     android:gravity="bottom"
+     android:padding="16dp"
+     android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+         android:layout_height="64dp"
+         android:layout_width="64dp"
+         android:src="@drawable/app_yy"
+         android:scaleType="centerCrop"
+         android:padding="4dp"
+         app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
+         android:layout_gravity="center_vertical" />
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:textSize="12sp"
+         android:fontFamily="sans-serif-medium"
+         android:textColor="@android:color/white"
+         android:layout_marginTop="8dp"
+         android:id="@+id/vers"
+         android:text="เวอร์ชั่น" />
+
+    <TextView
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:textSize="10sp"
+         android:fontFamily="sans-serif-medium"
+         android:textColor="@android:color/white"
+         android:layout_marginTop="8dp"
+         android:text="© 2025 ดูซีรีย์. ไม่สงวนลิขสิทธิ์" />
+
+</LinearLayout>

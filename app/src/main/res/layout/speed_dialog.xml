@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="?attr/colorSurface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="เลือกความเร็ว"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="?attr/colorOnSurface"
+            android:paddingBottom="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/speed_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton android:text="0.5x" android:id="@+id/speed_0_5"/>
+            <RadioButton android:text="1.0x ค่าเริ่มต้น" android:id="@+id/speed_1_0" android:checked="true"/>
+            <RadioButton android:text="1.25x" android:id="@+id/speed_1_25"/>
+            <RadioButton android:text="1.5x" android:id="@+id/speed_1_5"/>
+            <RadioButton android:text="2.0x" android:id="@+id/speed_2_0"/>
+            <RadioButton android:text="2.5x" android:id="@+id/speed_2_5"/>
+            <RadioButton android:text="3.0x" android:id="@+id/speed_3_0"/>
+        </RadioGroup>
+
+    </LinearLayout>
+</ScrollView>
