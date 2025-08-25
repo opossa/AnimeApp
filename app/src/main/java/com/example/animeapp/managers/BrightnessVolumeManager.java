@@ -8,7 +8,6 @@ import android.view.WindowManager;
 
 public class BrightnessVolumeManager {
     private static final int SHOW_MAX_BRIGHTNESS = 100;
-    private static final int SHOW_MAX_VOLUME = 10;
     private static final String PREFS_NAME = "VideoPlayerSettings";
 
     private final Context context;
@@ -16,7 +15,6 @@ public class BrightnessVolumeManager {
     private final SharedPreferences prefs;
 
     private int brightness;
-    private int volume;
 
     public BrightnessVolumeManager(Context context) {
         this.context = context;
@@ -28,10 +26,6 @@ public class BrightnessVolumeManager {
     private void loadSavedSettings() {
         brightness = prefs.getInt("brightness", SHOW_MAX_BRIGHTNESS / 2);
         setScreenBrightness(brightness);
-
-        int systemVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        volume = (int) ((systemVolume * 1.0f / maxVolume) * SHOW_MAX_VOLUME);
     }
 
     public void setScreenBrightness(int brightness) {
@@ -49,30 +43,21 @@ public class BrightnessVolumeManager {
         editor.apply();
     }
 
-    public void setVolume(int volume) {
-        this.volume = volume;
-        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        float d = (maxVolume * 1.0f) / SHOW_MAX_VOLUME;
-        int newVolume = (int) (d * volume);
-
-        if (newVolume > maxVolume) {
-            newVolume = maxVolume;
-        }
-        if (volume == SHOW_MAX_VOLUME && newVolume < maxVolume) {
-            newVolume = maxVolume;
-        }
-
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, 0);
-    }
-
     public int getBrightness() {
         return brightness;
     }
 
-    public int getVolume() {
-        int systemVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    public void setVolume(int volume) {
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        volume = (int) ((systemVolume * 1.0f / maxVolume) * SHOW_MAX_VOLUME);
-        return volume;
+        int newVolume = Math.max(0, Math.min(volume, maxVolume));
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, 0);
+    }
+
+    public int getVolume() {
+        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    }
+
+    public int getMaxVolume() {
+        return audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
     }
 }
