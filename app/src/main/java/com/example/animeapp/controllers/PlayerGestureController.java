@@ -96,7 +96,7 @@ public class PlayerGestureController {
         volumeIcon.setVisibility(View.GONE);
         brightnessIcon.setVisibility(View.VISIBLE);
 
-        boolean increase = distanceY < 0; // แก้ทิศทาง: ลากขึ้น = เพิ่ม
+        boolean increase = distanceY > 0; // แก้ทิศทาง: ลากขึ้น = เพิ่ม
         int currentBrightness = brightnessVolumeManager.getBrightness();
         int newValue = increase ? currentBrightness + 1 : currentBrightness - 1;
 
@@ -111,7 +111,7 @@ public class PlayerGestureController {
         volumeIcon.setVisibility(View.VISIBLE);
         brightnessIcon.setVisibility(View.GONE);
 
-        boolean increase = distanceY < 0; // แก้ทิศทาง: ลากขึ้น = เพิ่ม
+        boolean increase = distanceY > 0; // แก้ทิศทาง: ลากขึ้น = เพิ่ม
         int currentVolume = brightnessVolumeManager.getVolume();
         int maxVolume = brightnessVolumeManager.getMaxVolume();
         int newValue = increase ? currentVolume + 1 : currentVolume - 1;
