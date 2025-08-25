@@ -63,7 +63,7 @@ jobs:
           tag_name: "v${{ env.VERSION_NAME }}"
           files: app/build/outputs/apk/release/animeapp_${{ env.VERSION_NAME }}.apk
           name: "AnimeApp Release v${{ env.VERSION_NAME }}"
-          body: "Automated release from GitHub Actions."
+          body: "สร้างอัตโนมัติจาก GitHub Actions."
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
