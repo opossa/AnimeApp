@@ -21,17 +21,16 @@ public class PlayerGestureController {
     private final ImageView brightnessIcon;
     private final ImageView volumeIcon;
     private final TextView brightVolumeTV;
-    
+
     private boolean shouldShowController = true;
     private int touchPositionX;
     private static final int SHOW_MAX_BRIGHTNESS = 100;
-    private static final int SHOW_MAX_VOLUME = 50;
     private final GestureDetector gestureDetector;
 
-    public PlayerGestureController(Activity activity, PlayerView playerView, 
-            BrightnessVolumeManager brightnessVolumeManager,
-            LinearLayout brightnessVolumeContainer, 
-            ImageView brightnessIcon, ImageView volumeIcon, TextView brightVolumeTV) {
+    public PlayerGestureController(Activity activity, PlayerView playerView,
+                                   BrightnessVolumeManager brightnessVolumeManager,
+                                   LinearLayout brightnessVolumeContainer,
+                                   ImageView brightnessIcon, ImageView volumeIcon, TextView brightVolumeTV) {
         this.activity = activity;
         this.playerView = playerView;
         this.brightnessVolumeManager = brightnessVolumeManager;
@@ -40,7 +39,6 @@ public class PlayerGestureController {
         this.volumeIcon = volumeIcon;
         this.brightVolumeTV = brightVolumeTV;
         this.gestureDetector = new GestureDetector(activity, gestureListener);
-        
         setupGestureControls();
     }
 
@@ -98,7 +96,7 @@ public class PlayerGestureController {
         volumeIcon.setVisibility(View.GONE);
         brightnessIcon.setVisibility(View.VISIBLE);
 
-        boolean increase = distanceY > 0;
+        boolean increase = distanceY < 0;
         int currentBrightness = brightnessVolumeManager.getBrightness();
         int newValue = increase ? currentBrightness + 1 : currentBrightness - 1;
 
@@ -113,14 +111,15 @@ public class PlayerGestureController {
         volumeIcon.setVisibility(View.VISIBLE);
         brightnessIcon.setVisibility(View.GONE);
 
-        boolean increase = distanceY > 0;
+        boolean increase = distanceY < 0;
         int currentVolume = brightnessVolumeManager.getVolume();
+        int maxVolume = brightnessVolumeManager.getMaxVolume();
         int newValue = increase ? currentVolume + 1 : currentVolume - 1;
 
-        if (newValue >= 0 && newValue <= SHOW_MAX_VOLUME) {
+        if (newValue >= 0 && newValue <= maxVolume) {
             brightnessVolumeManager.setVolume(newValue);
         }
 
         brightVolumeTV.setText(String.valueOf(brightnessVolumeManager.getVolume()));
     }
-}
+                }
