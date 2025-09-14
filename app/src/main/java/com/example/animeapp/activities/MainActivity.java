@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements AppUpdateChecker.
 
 
     private void initializeAnimeSources() {
-        animeSources.put("Animemoji", new AnimemojiSource());
+        animeSources.put("Animemoji", new AnimemojiSource(this));
         animeSources.put("Fixmono", new FixmonoSource());
         animeSources.put("GoSeries4K", new GoSeriesSource());
         animeSources.put("WowDrama", new WowDramaSource());
