@@ -55,36 +55,37 @@ public class Hdd1112Source implements AnimeSource {
     }
 
     public List<PageItem> parsePageItems(Document doc) {
-        List<PageItem> pages = new ArrayList<>();
-        Element pagination = doc.selectFirst(".tt_pagination");
-        if (pagination == null) {
-            return pages;
-        }
+    List<PageItem> pages = new ArrayList<>();
 
-        Element prevLink = pagination.selectFirst("a.prev.page-numbers");
-        if (prevLink != null) {
-            pages.add(new PageItem("«", prevLink.attr("href")));
-        }
-
-        Elements pageItems = pagination.select("li:not(:has(a.prev, a.next))");
-        for (Element item : pageItems) {
-            Element link = item.selectFirst("a.page-numbers");
-            Element currentPage = item.selectFirst("span.page-numbers.current");
-
-            if (link != null) {
-                pages.add(new PageItem(link.text(), link.attr("href")));
-            } else if (currentPage != null) {
-                pages.add(new PageItem(currentPage.text(), null));
-            }
-        }
-
-        Element nextLink = pagination.selectFirst("a.next.page-numbers");
-        if (nextLink != null) {
-            pages.add(new PageItem("»", nextLink.attr("href")));
-        }
-
+    Element pagination = doc.selectFirst(".cj-pagination");
+    if (pagination == null) {
         return pages;
     }
+
+    Element prevLink = pagination.selectFirst("a.prev.page-numbers");
+    if (prevLink != null) {
+        pages.add(new PageItem("«", prevLink.attr("href")));
+    }
+
+    Elements pageItems = pagination.select("ul.page-numbers > li:not(:has(a.prev, a.next))");
+
+    for (Element item : pageItems) {
+        Element link = item.selectFirst("a.page-numbers");
+        Element currentPage = item.selectFirst("span.page-numbers.current");
+        Element dots = item.selectFirst("span.page-numbers.dots"); // จุดสามจุด "..."
+
+        if (link != null && !link.text().trim().isEmpty()) {
+            pages.add(new PageItem(link.text().trim(), link.attr("href")));
+        }
+    }
+
+    Element nextLink = pagination.selectFirst("a.next.page-numbers");
+    if (nextLink != null) {
+        pages.add(new PageItem("»", nextLink.attr("href")));
+    }
+
+    return pages;
+}
 
     @Override
     public void fetchAnimeList(String pageUrl, AnimeLoadCallback callback) {
