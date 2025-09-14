@@ -1,5 +1,7 @@
 package com.example.animeapp.parser;
 
+import android.util.Log;
+
 import com.example.animeapp.models.Anime;
 import com.example.animeapp.models.Episode;
 import com.example.animeapp.models.HostListModel;
@@ -10,7 +12,6 @@ import com.google.gson.JsonParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HDD1112Parser implements AnimeParser {
+    private static final String TAG = "HDD1112Parser";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
     private String referer;
@@ -48,6 +50,7 @@ public class HDD1112Parser implements AnimeParser {
         String postId = extractPostId(doc);
         String nonce = extractNonce(doc);
 
+        
         if (postId == null || nonce == null) {
             throw new IllegalStateException("ไม่พบ post_id หรือ nonce");
         }
@@ -62,6 +65,7 @@ public class HDD1112Parser implements AnimeParser {
         String nonce = extractNonce(doc);
 
         if (postId == null || nonce == null) {
+            Log.e(TAG, "parseEpisodes: missing postId/nonce");
             return new ArrayList<>();
         }
 
@@ -90,6 +94,8 @@ public class HDD1112Parser implements AnimeParser {
             }
 
             String json = response.body().string();
+            Log.d(TAG, "API response: " + json);
+
             JsonObject root = JsonParser.parseString(json).getAsJsonObject();
 
             if (!root.has("success") || !root.get("success").getAsBoolean()) {
@@ -101,11 +107,35 @@ public class HDD1112Parser implements AnimeParser {
             if (!series.has("videos")) throw new IOException("Missing videos");
 
             JsonObject videos = series.getAsJsonObject("videos");
-            if (!videos.has("th")) throw new IOException("No Thai version available");
 
-            JsonObject thVideos = videos.getAsJsonObject("th");
-            int totalEp = thVideos.has("total_ep") ? thVideos.get("total_ep").getAsInt() : 0;
-            JsonObject list = thVideos.getAsJsonObject("list");
+            JsonObject selectedVideos = null;
+            String versionKey = "";
+
+            if (videos.has("th")) {
+                JsonObject thObj = videos.getAsJsonObject("th");
+                if (thObj.has("list") && thObj.get("list").isJsonObject()) {
+                    selectedVideos = thObj;
+                    versionKey = "th";
+                }
+            }
+
+            if (selectedVideos == null && videos.has("sub")) {
+                JsonObject subObj = videos.getAsJsonObject("sub");
+                if (subObj.has("list") && subObj.get("list").isJsonObject()) {
+                    selectedVideos = subObj;
+                    versionKey = "sub";
+                }
+            }
+
+            if (selectedVideos == null) {
+                Log.e(TAG, "No valid th/sub list found for postId=" + postId);
+                return episodes;
+            }
+
+            int totalEp = selectedVideos.has("total_ep") ? selectedVideos.get("total_ep").getAsInt() : 0;
+            JsonObject list = selectedVideos.getAsJsonObject("list");
+
+            Log.d(TAG, "Using version=" + versionKey + ", totalEp=" + totalEp);
 
             for (int i = 1; i <= totalEp; i++) {
                 String epKey = "ep_" + i;
@@ -120,6 +150,7 @@ public class HDD1112Parser implements AnimeParser {
                     }
 
                     if (videoUrl != null) {
+                        Log.d(TAG, "Episode " + i + " -> " + videoUrl);
                         episodes.add(new Episode(
                                 "EP." + i,
                                 videoUrl,
@@ -128,12 +159,16 @@ public class HDD1112Parser implements AnimeParser {
                                 referer,
                                 i
                         ));
+                    } else {
+                        Log.w(TAG, "EP." + i + " has no videoUrl");
                     }
+                } else {
+                    Log.w(TAG, "Missing " + epKey);
                 }
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "fetchEpisodesFromApi error: " + e.getMessage(), e);
         }
 
         return episodes;
@@ -170,7 +205,7 @@ public class HDD1112Parser implements AnimeParser {
         this.referer = referer;
         String videoUrl = epDoc.baseUri();
 
-        if (videoUrl.contains("online225.com") | videoUrl.contains("oklive-1.xyz") | videoUrl.contains("mycdn-hd.xyz")) {
+        if (videoUrl.contains("online225.com") || videoUrl.contains("oklive-1.xyz") || videoUrl.contains("mycdn-hd.xyz")) {
             try {
                 Document playerDoc = Jsoup.connect(videoUrl)
                         .userAgent("Mozilla/5.0")
@@ -238,4 +273,4 @@ public class HDD1112Parser implements AnimeParser {
 
         throw new IOException("ไม่พบ video URL ในสคริปต์");
     }
-            }
+                            }
