@@ -4,84 +4,192 @@ import com.example.animeapp.models.Anime;
 import com.example.animeapp.models.Episode;
 import com.example.animeapp.models.HostListModel;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HDD1112Parser implements AnimeParser {
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
     private String referer;
+    private String animeImageUrl;
 
     @Override
-    public Anime parseAnimeDetail(Document doc) {
+    public Anime parseAnimeDetail(Document doc) throws IOException {
         this.referer = doc.baseUri();
+
+        if (!this.referer.contains("1112hd2.com")) {
+            throw new IOException("ไม่สามารถดึงข้อมูลซีรี่ย์ได้");
+        }
+
         String title = doc.selectFirst("meta[property=og:title]").attr("content");
-        String image = doc.selectFirst("meta[property=og:image]").attr("content");
-        return new Anime(title, doc.baseUri(), image, parseEpisodes(doc, image));
+        this.animeImageUrl = doc.selectFirst("meta[property=og:image]").attr("content");
+
+        if (this.animeImageUrl == null || this.animeImageUrl.isEmpty()) {
+            this.animeImageUrl = "https://1112hd2.com/wp-content/themes/cj/assets/images/default-poster.jpg";
+        }
+
+        String postId = extractPostId(doc);
+        String nonce = extractNonce(doc);
+
+        if (postId == null || nonce == null) {
+            throw new IllegalStateException("ไม่พบ post_id หรือ nonce");
+        }
+
+        List<Episode> episodes = parseEpisodes(doc, this.animeImageUrl);
+        return new Anime(title, doc.baseUri(), this.animeImageUrl, episodes);
     }
 
     @Override
     public List<Episode> parseEpisodes(Document doc, String imageUrl) {
+        String postId = extractPostId(doc);
+        String nonce = extractNonce(doc);
+
+        if (postId == null || nonce == null) {
+            return new ArrayList<>();
+        }
+
+        return fetchEpisodesFromApi(postId, nonce, imageUrl);
+    }
+
+    private List<Episode> fetchEpisodesFromApi(String postId, String nonce, String animeImageUrl) {
         List<Episode> episodes = new ArrayList<>();
 
-        Elements episodeDivs = doc.select("div.tab_movie_grop.grop_m.main div.btab_ct[data-url]");
+        try {
+            String url = "https://1112hd2.com/wp-admin/admin-ajax.php";
+            MediaType formMediaType = MediaType.parse("application/x-www-form-urlencoded");
+            RequestBody body = RequestBody.create(
+                formMediaType,
+                "action=single_get_videos&post_id=" + postId + "&nonce=" + nonce
+            );
 
-        for (int i = 0; i < episodeDivs.size(); i++) {
-            Element ep = episodeDivs.get(i);
-            String title = ep.text().trim();
-            String videoPageUrl = ep.attr("data-url").trim();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
 
-            if (!videoPageUrl.isEmpty()) {
-                episodes.add(new Episode(title, videoPageUrl, imageUrl, "", this.referer, i + 1));
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new IOException("API failed: " + response.code());
             }
+
+            String json = response.body().string();
+            JsonObject root = JsonParser.parseString(json).getAsJsonObject();
+
+            if (!root.has("success") || !root.get("success").getAsBoolean()) {
+                throw new IOException("API success=false");
+            }
+
+            JsonObject data = root.getAsJsonObject("data");
+            JsonObject series = data.getAsJsonObject("series");
+            if (!series.has("videos")) throw new IOException("Missing videos");
+
+            JsonObject videos = series.getAsJsonObject("videos");
+            if (!videos.has("th")) throw new IOException("No Thai version available");
+
+            JsonObject thVideos = videos.getAsJsonObject("th");
+            int totalEp = thVideos.has("total_ep") ? thVideos.get("total_ep").getAsInt() : 0;
+            JsonObject list = thVideos.getAsJsonObject("list");
+
+            for (int i = 1; i <= totalEp; i++) {
+                String epKey = "ep_" + i;
+                if (list.has(epKey)) {
+                    JsonObject epData = list.getAsJsonObject(epKey);
+                    String videoUrl = null;
+
+                    if (epData.has("server_1") && epData.getAsJsonObject("server_1").has("url")) {
+                        videoUrl = epData.getAsJsonObject("server_1").get("url").getAsString();
+                    } else if (epData.has("server_2") && epData.getAsJsonObject("server_2").has("url")) {
+                        videoUrl = epData.getAsJsonObject("server_2").get("url").getAsString();
+                    }
+
+                    if (videoUrl != null) {
+                        episodes.add(new Episode(
+                                "EP." + i,
+                                videoUrl,
+                                animeImageUrl,
+                                "",
+                                referer,
+                                i
+                        ));
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return episodes;
     }
 
+    private String extractPostId(Document doc) {
+        Element script = doc.selectFirst("script#wp-postviews-cache-js-extra");
+        if (script != null) {
+            String js = script.data();
+            Pattern pattern = Pattern.compile("\"post_id\":\"(\\d+)\"");
+            Matcher matcher = pattern.matcher(js);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        }
+        return null;
+    }
+
+    private String extractNonce(Document doc) {
+        Element script = doc.selectFirst("script#wp-postviews-cache-js-extra");
+        if (script != null) {
+            String js = script.data();
+            Pattern pattern = Pattern.compile("\"nonce\":\"([^\"]+)\"");
+            Matcher matcher = pattern.matcher(js);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        }
+        return null;
+    }
+
     @Override
     public String parseVideoUrl(Document epDoc, String referer, int episodeNumber) throws IOException {
         this.referer = referer;
+        String videoUrl = epDoc.baseUri();
 
-        Element iframe = epDoc.selectFirst("iframe[src]");
-        if (iframe != null) {
-            String iframeUrl = iframe.absUrl("src");
-            if (!iframeUrl.isEmpty()) {
-                try {
-                    return originalIframeProcessing(iframeUrl);
-                } catch (IOException e) {
+        if (videoUrl.contains("online225.com") | videoUrl.contains("oklive-1.xyz") | videoUrl.contains("mycdn-hd.xyz")) {
+            try {
+                Document playerDoc = Jsoup.connect(videoUrl)
+                        .userAgent("Mozilla/5.0")
+                        .referrer(referer)
+                        .get();
+
+                Element iframe = playerDoc.selectFirst("iframe[src]");
+                if (iframe != null) {
+                    return iframe.absUrl("src");
                 }
+
+                return extractFromPageScript(playerDoc.html());
+
+            } catch (IOException e) {
+                return videoUrl;
             }
         }
 
-        return extractFromPageScript(epDoc.html());
-    }
-
-    private String originalIframeProcessing(String iframeUrl) throws IOException {
-        Request request = new Request.Builder()
-            .url(iframeUrl)
-            .header("User-Agent", "Mozilla/5.0")
-            .header("Referer", referer)
-            .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            String html = response.body().string();
-            return extractFromPageScript(html);
-        }
+        return videoUrl;
     }
 
     private String extractFromPageScript(String html) throws IOException {
@@ -110,14 +218,14 @@ public class HDD1112Parser implements AnimeParser {
                     List<String> selectedDomainList = hostList.getHostList().get(videoServer);
                     if (selectedDomainList != null && !selectedDomainList.isEmpty()) {
                         String domain = selectedDomainList.get(0)
-                            .replace("[", "")
-                            .replace("]", "")
-                            .replace("'", "")
-                            .trim();
+                                .replace("[", "")
+                                .replace("]", "")
+                                .replace("'", "")
+                                .trim();
 
                         String videoUrl = videoFile.replaceAll(
-                            "https:\\\\/\\\\/\\d+\\\\/cdn\\\\/hls\\\\/",
-                            "https://" + domain + "/api/files/"
+                                "https:\\\\/\\\\/\\d+\\\\/cdn\\\\/hls\\\\/",
+                                "https://" + domain + "/api/files/"
                         );
 
                         videoUrl = videoUrl.replace("\\/", "/");
@@ -130,4 +238,4 @@ public class HDD1112Parser implements AnimeParser {
 
         throw new IOException("ไม่พบ video URL ในสคริปต์");
     }
-}
+            }
