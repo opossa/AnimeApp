@@ -12,15 +12,12 @@ import org.jsoup.Jsoup;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-
 public class AnimemojiParser implements AnimeParser {
     @Override
     public Anime parseAnimeDetail(Document doc) {
         String title = doc.selectFirst("meta[property=og:title]").attr("content")
                        .replaceAll("[-–]\\s*AnimeMoji.*$", "").trim();
         String image = doc.selectFirst("meta[property=og:image]").attr("content");
-       // String referer = doc.baseUri().split("/episode")[0] + "/";
-        //List<Episode> episodes = parseEpisodes(doc, image);
         return new Anime(title, doc.baseUri(), image, parseEpisodes(doc, image));
     }
 
@@ -46,18 +43,19 @@ public class AnimemojiParser implements AnimeParser {
     @Override
     public String parseVideoUrl(Document epDoc, String referer, int episodeNumber) throws IOException {
         Element iframe = epDoc.selectFirst("iframe.perfmatters-lazy");
-        if (iframe != null && iframe.hasAttr("data-src")) {
-            Document iframeDoc = Jsoup.connect(iframe.attr("data-src"))
-                                    .userAgent("Mozilla/5.0")
-                                    .referrer(referer)
-                                    .get();
+        if (iframe != null) {
+            String iframeUrl = iframe.hasAttr("data-src") ? iframe.attr("data-src") : iframe.attr("src");
             
-            Pattern pattern = Pattern.compile("var linkplay\\s*=\\s*['\"](https?://[^'\"]+\\.m3u8)['\"]");
-            Matcher matcher = pattern.matcher(iframeDoc.html());
-            if (matcher.find()) {
-                return matcher.group(1);
+            if (iframeUrl != null && !iframeUrl.isEmpty()) {
+                Pattern idPattern = Pattern.compile("embed/([^/?]+)");
+                Matcher idMatcher = idPattern.matcher(iframeUrl);
+                
+                if (idMatcher.find()) {
+                    String videoId = idMatcher.group(1);
+                    return "https://moji.abcdxzy.xyz:8443/vod/" + videoId + "/video.mp4/playlist.m3u8";
+                }
             }
-        }
-        return "";
+        }  
+        return "";  
     }
 }
